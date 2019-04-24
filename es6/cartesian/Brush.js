@@ -234,20 +234,19 @@ function (_Component) {
         isSlideMoving: false,
         isTravellerMoving: true,
         movingTravellerId: id,
-        brushMoveStartX: event.pageX
+        brushMoveStartX: event.pageX,
+        travalerMoveStartX: this.state[id]
       });
     }
   }, {
     key: "handleTravellerMove",
     value: function handleTravellerMove(e) {
-      var _this$setState;
-
       var _this$state2 = this.state,
           brushMoveStartX = _this$state2.brushMoveStartX,
           movingTravellerId = _this$state2.movingTravellerId,
+          travalerMoveStartX = _this$state2.travalerMoveStartX,
           endX = _this$state2.endX,
           startX = _this$state2.startX;
-      var prevValue = this.state[movingTravellerId];
       var _this$props5 = this.props,
           x = _this$props5.x,
           width = _this$props5.width,
@@ -262,20 +261,12 @@ function (_Component) {
       var delta = e.pageX - brushMoveStartX;
 
       if (delta > 0) {
-        delta = Math.min(delta, x + width - travellerWidth - prevValue);
-
-        if (prevValue + delta > e.pageX - travellerWidth / 2) {
-          delta = 0;
-        }
+        delta = Math.min(delta, x + width - travellerWidth - travalerMoveStartX);
       } else if (delta < 0) {
-        delta = Math.max(delta, x - prevValue);
-
-        if (prevValue + delta < e.pageX - travellerWidth * 2) {
-          delta = 0;
-        }
+        delta = Math.max(delta, x - travalerMoveStartX);
       }
 
-      params[movingTravellerId] = prevValue + delta;
+      params[movingTravellerId] = travalerMoveStartX + delta;
       var newIndex = this.getIndex(params);
       var startIndex = newIndex.startIndex,
           endIndex = newIndex.endIndex;
@@ -290,7 +281,7 @@ function (_Component) {
         return false;
       };
 
-      this.setState((_this$setState = {}, _defineProperty(_this$setState, movingTravellerId, prevValue + delta), _defineProperty(_this$setState, "brushMoveStartX", e.pageX), _this$setState), function () {
+      this.setState(_defineProperty({}, movingTravellerId, travalerMoveStartX + delta), function () {
         if (onChange) {
           if (isFullGap()) {
             onChange(newIndex);
