@@ -143,7 +143,7 @@ function (_Component) {
     value: function componentDidMount() {
       document.addEventListener('mousemove', this.handleDrag);
       document.addEventListener('mouseup', this.handleDragEnd);
-      document.addEventListener('touchemove', this.handleTouchMove);
+      document.addEventListener('touchmove', this.handleTouchMove);
       document.addEventListener('touchend', this.handleDragEnd);
     }
   }, {
@@ -153,7 +153,7 @@ function (_Component) {
       this.scaleValues = null;
       document.removeEventListener('mousemove', this.handleDrag);
       document.removeEventListener('mouseup', this.handleDragEnd);
-      document.removeEventListener('touchemove', this.handleTouchMove);
+      document.removeEventListener('touchmove', this.handleTouchMove);
       document.removeEventListener('touchend', this.handleDragEnd);
 
       if (this.leaveTimer) {
